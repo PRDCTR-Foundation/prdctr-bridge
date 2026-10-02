@@ -682,7 +682,9 @@ contract PRDCTRBridge is IPRDCTRBridge, Initializable, IUniswapV3Callback, Ownab
     (uint80 roundId, int256 answer, , uint256 updatedAt, uint80 answeredInRound) = IChainlinkV3Aggregator(CHAINLINK_USDC_ETH_FEED).latestRoundData();
 
     unchecked {
-      if (answer <= 0 || updatedAt == 0 || block.timestamp - updatedAt > CHAINLINK_USDC_ETH_MAX_AGE || answeredInRound < roundId) {
+      // Reject answers that would floor to a zero or negative price after scaling.
+      // A zero `price` would divide-by-zero in the relayer fee paths (relayerLift/relayerLower).
+      if (answer <= 0 || answer < int256(USDC_ETH_PRICE_SCALE) || updatedAt == 0 || block.timestamp - updatedAt > CHAINLINK_USDC_ETH_MAX_AGE || answeredInRound < roundId) {
         revert InvalidOracleData();
       }
 
@@ -707,13 +709,13 @@ contract PRDCTRBridge is IPRDCTRBridge, Initializable, IUniswapV3Callback, Ownab
     if (msg.sender != address(this)) revert InvalidCaller();
     (, int256 amount1) = IUniswapV3Pool(UNISWAP_V3_USDC_WETH_POOL).swap(address(this), true, balance, MIN_SQRT_RATIO + 1, '');
 
-    unchecked {
-      uint256 ethAmount = uint256(amount1 * -1);
-      if (ethAmount < (uint256(balance) * usdcEthPrice * 987) / 1000) revert RefundBelowMin();
-      IWETH9(WETH).withdraw(ethAmount);
-      (bool success, ) = relayer.call{ value: ethAmount }('');
-      if (!success) revert RefundRejected();
-    }
+    uint256 ethAmount = uint256(amount1 * -1);
+    // Computed under checked arithmetic so an overflowing price/balance product reverts
+    // (safe) instead of wrapping underflowing into a valid-looking minimum.
+    if (ethAmount < (uint256(balance) * usdcEthPrice * 987) / 1000) revert RefundBelowMin();
+    IWETH9(WETH).withdraw(ethAmount);
+    (bool success, ) = relayer.call{ value: ethAmount }('');
+    if (!success) revert RefundRejected();
   }
 
   /**

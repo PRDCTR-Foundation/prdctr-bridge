@@ -1,0 +1,47 @@
+# CI for the PRDCTR Bridge: install, compile, test and audit on every push/PR.
+#
+# Third-party actions are pinned to commit SHAs (not mutable tags) so a
+# republished action tag cannot silently change what this pipeline runs.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile contracts
+        run: npx hardhat compile
+
+      - name: Run tests
+        run: npm test
+
+      # Gate on the production dependency tree only. The 13 high (dev-only)
+      # findings from the full audit all trace to the Hardhat toolchain itself,
+      # which has no fixed release yet; failing on them would make CI red on
+      # every run. The summary line keeps that backlog visible.
+      - name: Run dependency audit
+        run: |
+          npm audit --omit=dev --audit-level=high
+          set +e
+          npm audit --audit-level=low 2>&1 | tail -n 3
