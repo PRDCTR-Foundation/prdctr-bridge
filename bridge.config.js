@@ -52,27 +52,27 @@ const bridgeConfig = {
       {
         ethAddress: '0x073411c96F59ef379DE620fd3226eA3f222af1b9',
         ethUncompressedPublicKey: '0x047abd11467b065e7b12d7b61cf9d73c1c359c5ece1b15a560806a610ccb6d0e0949805c309f57329642457bbdfc65ab467d7335d130d417db27987827ff2432d9',
-        t2PublicKey: '0xd8bea8fb05df6e07d27574f7e6890ec97182bd187167757f05573a866b4ceb0f'
+        t2PublicKey: '0x862b17d13c612140c7bd05592b307ee910b3e535e55c4ceed5498a0e3c9db307'
       },
       {
         ethAddress: '0xE43ce3aEF589a1c413A4213F9937Ac60D341d214',
         ethUncompressedPublicKey: '0x04fe1be9394842c6a52e9d2acb7826331eb2d4fe3ab488c6f184e97767caa740d8a57b1f9f557bd26dfe065562d0447284797c2d5de2a2f05333471fac3bd43af3',
-        t2PublicKey: '0xd64ae61b6621c48bc782b8983d666a30619bc8334a65b4323ba0036fc6e04278'
+        t2PublicKey: '0x70c486a5453218fd491f3c1708e42a4f5616ad5a2aecaa8a8f5c22cb71564e0c'
       },
       {
         ethAddress: '0xee2238986aE9C2D104cd11a3e2165c4684580eF9',
         ethUncompressedPublicKey: '0x04faee2e31f9f6f256f3fb58971448ae5bd0d353ed3d3a09c7d921b65349a6fb7ad0d6322621d4a0bdbf0b948938e619ca306b6ca93fb453fcfaa2e4cfff58d76d',
-        t2PublicKey: '0x1ed9ea9808b2077169fa554f2084582a63a12cf3b7ac51952677ac60f960846f'
+        t2PublicKey: '0x12f1b8865a4ae30b41b37bc32ffdfcb9fb533f6d23bc83df3d46617bd7e5231d'
       },
       {
         ethAddress: '0xF6D4696405B4D6971bb0532cf5e76774259575aA',
         ethUncompressedPublicKey: '0x04006f92d93a4cb34528bd4db425489b4bca783cd29a06a752c0c14e909e9836ae64f83f724670fd2ab00e32d5f5fc07379635233fc063568051fe81b18df2e81b',
-        t2PublicKey: '0xc4a51e4fe4065c6c95891c0fbb33ca1249deb922121a423dffbd7a01b03e7053'
+        t2PublicKey: '0x3e96d9fe269917236c07346878abc0771903eb067113693f0a5fd55cc4212243'
       },
       {
         ethAddress: '0xF45337E8A2ffE96809B71a6D6Be186985457f6bB',
         ethUncompressedPublicKey: '0x0440831337647a7e796f4e9feca9a8af14b50e17e1cc7be25fbc9928ac9a2914b5cd97ce178c2bb2e217c74fcef96d7fe4bb1f451fa3282e766ff698ea20c0e92b',
-        t2PublicKey: '0xc88510affc6377d814686c2b6f865125205c7108ae7a80bc94d74d99c8f97e39'
+        t2PublicKey: '0x805d780900f281567adcca5c91f6296fb3ecc693ddc2ea493fd4ce1015e59944'
       }
     ]
   },
